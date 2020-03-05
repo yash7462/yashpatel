@@ -19,13 +19,14 @@ public class UserService {
 	 * @return
 	 */
 	public int save(OAuth2User principal) {
-		return dao.save(principal);
-		/*
-		 * user.setEmail(principal.getAttribute("email"));
-		 * user.setName(principal.getAttribute("name"));
-		 */
-		
-		
-	}
+		/*if(dao.getUserByEmail(principal.getAttribute("email")) != null) {
+            return 0;
+		}
+		else {*/
+			return dao.save(principal);		
+		}	
+	
+	
+	
 
 }

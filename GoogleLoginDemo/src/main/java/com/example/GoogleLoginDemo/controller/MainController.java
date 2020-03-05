@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.GoogleLoginDemo.service.UserService;
@@ -16,7 +17,10 @@ import com.example.GoogleLoginDemo.service.UserService;
 public class MainController {
 	@Autowired
 	UserService userservice;
-
+/**
+ * 
+ * @return
+ */
 	@RequestMapping("/")
 	public String showform() {
 
@@ -30,21 +34,10 @@ public class MainController {
 		return "hello world";
 	}
 
-	@RequestMapping("/showinformation")
-	@ResponseBody
+	@RequestMapping("/adddata")
 	public String user(@AuthenticationPrincipal OAuth2User principal, Model m) {
-		// String name = Collections.singletonMap("Name",
-		// principal.getAttribute("name"));
-
-		// UserDetail user = new UserDetail();
-
 		m.addAttribute("command", userservice.save(principal));
-
-		// user.setEmail(principal.getAttribute("email"));
-		// user.setName(principal.getAttribute("name"));
-		// dao.save(user);
-
-		return "getdata";
+		return "success";
 
 	}
 
