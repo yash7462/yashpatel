@@ -23,51 +23,57 @@ public class PlantMasterDaoImpl implements PlantMasterDao {
 	@Autowired
 	private PlantMasterRepository plantmasterepository;
 
-
 	public PlantMaster addPlantMaster(@Valid @RequestBody PlantMaster plantmaster) {
-			return plantmasterepository.save(plantmaster);
-		}
+		return plantmasterepository.save(plantmaster);
+	}
 
 	@Override
-		public ResponseEntity<PlantMaster> editPlantMaster(@PathVariable(value = "plantmasterId") long plantmasterId,
-				@Valid @RequestBody PlantMaster plantmasterDetails) throws ResourceNotFoundException {
+	public ResponseEntity<PlantMaster> editPlantMaster(@PathVariable(value = "plantmasterId") long plantmasterId,
+			@Valid @RequestBody PlantMaster plantmasterDetails) throws ResourceNotFoundException {
 		PlantMaster pm = plantmasterepository.findById(plantmasterId)
-					.orElseThrow(() -> new ResourceNotFoundException("Plant Master not found on : " + plantmasterId));
-			pm.setFirstName(plantmasterDetails.getFirstName());
-			pm.setLastName(plantmasterDetails.getLastName());
-			pm.setGender(plantmasterDetails.getGender());
-			pm.setDateofbirth(plantmasterDetails.getDateofbirth());
-			pm.setPrimarymobileno(plantmasterDetails.getPrimarymobileno());
-			pm.setSecondarymobileno(plantmasterDetails.getSecondarymobileno());
-			pm.setExperience(plantmasterDetails.getExperience());
-			pm.setHouseNo(plantmasterDetails.getHouseNo());
-			pm.setStreetName(plantmasterDetails.getStreetName());
-			pm.setArea(plantmasterDetails.getArea());
-			pm.setCity(plantmasterDetails.getCity());
-			pm.setPincode(plantmasterDetails.getPincode());
-			pm.setUpdatedAt(plantmasterDetails.getUpdatedAt());
-			
-			final PlantMaster updatedPlantMaster = plantmasterepository.save(pm);
-			return ResponseEntity.ok(updatedPlantMaster);
-		
+				.orElseThrow(() -> new ResourceNotFoundException("Plant Master not found on : " + plantmasterId));
+		pm.setFirstName(plantmasterDetails.getFirstName());
+		pm.setLastName(plantmasterDetails.getLastName());
+		pm.setGender(plantmasterDetails.getGender());
+		pm.setDateofbirth(plantmasterDetails.getDateofbirth());
+		pm.setPrimarymobileno(plantmasterDetails.getPrimarymobileno());
+		pm.setSecondarymobileno(plantmasterDetails.getSecondarymobileno());
+		pm.setExperience(plantmasterDetails.getExperience());
+		pm.setHouseNo(plantmasterDetails.getHouseNo());
+		pm.setStreetName(plantmasterDetails.getStreetName());
+		pm.setArea(plantmasterDetails.getArea());
+		pm.setCity(plantmasterDetails.getCity());
+		pm.setPincode(plantmasterDetails.getPincode());
+		pm.setUpdatedAt(plantmasterDetails.getUpdatedAt());
+
+		final PlantMaster updatedPlantMaster = plantmasterepository.save(pm);
+		return ResponseEntity.ok(updatedPlantMaster);
+
 	}
 
 	@Override
-	public Map<String, Boolean> deletePlantMaster(@PathVariable(value = "plantmasterId") long plantmasterId) throws Exception {
+	public ResponseEntity<PlantMaster> deletePlantMaster(@PathVariable(value = "plantmasterId") long plantmasterId)
+			throws Exception {
+		PlantMaster pm = plantmasterepository.findById(plantmasterId).orElseThrow(() -> new ResourceNotFoundException(" plantmaster not found  on : " + plantmasterId));
+		/*
+		 * 
+		 * Map<String, Boolean> response = new HashMap<>(); response.put("deleted",
+		 * Boolean.TRUE);
+		 */
+		pm.setActive(false);
+		final PlantMaster updatedPlantMaster = plantmasterepository.save(pm);
+		return ResponseEntity.ok(updatedPlantMaster);
+
+	}
+
+	@Override
+	public ResponseEntity<PlantMaster> readPlantMaster(@PathVariable(value = "plantmasterId") long plantmasterId)
+			throws ResourceNotFoundException {
 		PlantMaster plantmaster = plantmasterepository.findById(plantmasterId)
-				.orElseThrow(() -> new ResourceNotFoundException(" plantmaster not found  on : " + plantmasterId));
-		plantmasterepository.delete(plantmaster);
-		Map<String, Boolean> response = new HashMap<>();
-		response.put("deleted", Boolean.TRUE);
-		return response;
-	}
-
-	@Override
-	public ResponseEntity<PlantMaster> readPlantMaster(@PathVariable(value = "plantmasterId") long plantmasterId) throws ResourceNotFoundException {
-		PlantMaster plantmaster = plantmasterepository.findById(plantmasterId)	.orElseThrow(() -> new ResourceNotFoundException("plantmaster not found on : " + plantmasterId));
+				.orElseThrow(() -> new ResourceNotFoundException("plantmaster not found on : " + plantmasterId));
 		return ResponseEntity.ok().body(plantmaster);
 	}
-	
+
 	@Override
 	public List<PlantMaster> readAllPlantMaster() {
 		return plantmasterepository.findAll();

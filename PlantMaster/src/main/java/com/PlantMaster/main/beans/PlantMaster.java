@@ -1,6 +1,7 @@
 package com.PlantMaster.main.beans;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +15,11 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
+@Where(clause = "is_active=1")
 @Table(name = "tbl_plantmaster")
 @EntityListeners(AuditingEntityListener.class)
 public class PlantMaster {
@@ -24,6 +27,9 @@ public class PlantMaster {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long plantmasterId;
+
+	@Column(name = "is_active")
+	private Boolean active = true;
 
 	@Column(name = "first_name", nullable = false)
 	private String firstName;
@@ -82,11 +88,13 @@ public class PlantMaster {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PlantMaster(long plantmasterId, String firstName, String lastName, String email, String gender,
-			Date dateofbirth, long primarymobileno, long secondarymobileno, String experience, String houseNo,
-			String streetName, String area, String landmark, String city, int pincode, Date createdAt, Date updatedAt) {
+	public PlantMaster(long plantmasterId, Boolean active, String firstName, String lastName, String email,
+			String gender, Date dateofbirth, long primarymobileno, long secondarymobileno, String experience,
+			String houseNo, String streetName, String area, String landmark, String city, int pincode, Date createdAt,
+			Date updatedAt) {
 		super();
 		this.plantmasterId = plantmasterId;
+		this.active = active;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -111,6 +119,14 @@ public class PlantMaster {
 
 	public void setPlantmasterId(long plantmasterId) {
 		this.plantmasterId = plantmasterId;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public String getFirstName() {

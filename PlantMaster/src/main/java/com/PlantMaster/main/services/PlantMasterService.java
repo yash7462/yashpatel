@@ -13,7 +13,7 @@ public interface PlantMasterService {
 	
 	public ResponseEntity<PlantMaster> editPlantMaster(PlantMaster plantmaster,long plantmasterId) throws ResourceNotFoundException;
 	
-	public Map<String, Boolean> deletePlantMaster(long plantmasterId) throws Exception;
+	public ResponseEntity<PlantMaster> deletePlantMaster(long plantmasterId) throws Exception;
 	
 	public ResponseEntity<PlantMaster> readPlantMaster(long plantmastrId) throws ResourceNotFoundException;
 	

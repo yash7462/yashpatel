@@ -68,7 +68,7 @@ public class PlantMasterController {
 	}
 	
 	@DeleteMapping("/{plantmasterId}")
-	public Map<String, Boolean> deletePlantMaster(@PathVariable(value = "plantmasterId") long plantmasterId) throws Exception {
+	public ResponseEntity<PlantMaster> deletePlantMaster(@PathVariable(value = "plantmasterId") long plantmasterId) throws Exception {
 		return plantmasterservice.deletePlantMaster(plantmasterId);
 	}
 

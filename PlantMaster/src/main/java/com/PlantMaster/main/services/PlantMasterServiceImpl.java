@@ -26,7 +26,7 @@ public class PlantMasterServiceImpl implements PlantMasterService {
 		return plantmasterDao.editPlantMaster(plantmasterId, plantmaster);
 	}
 
-	public Map<String, Boolean> deletePlantMaster(long plantmasterId) throws Exception {
+	public ResponseEntity<PlantMaster> deletePlantMaster(long plantmasterId) throws Exception {
 		return plantmasterDao.deletePlantMaster(plantmasterId);
 	}
 

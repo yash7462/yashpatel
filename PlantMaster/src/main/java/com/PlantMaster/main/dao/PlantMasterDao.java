@@ -21,6 +21,6 @@ public interface PlantMasterDao {
 	ResponseEntity<PlantMaster> editPlantMaster(long plantmasterId, @Valid PlantMaster plantmaster)
 			throws ResourceNotFoundException;
 
-	public Map<String, Boolean> deletePlantMaster(long plantmasterId) throws Exception;
+	public ResponseEntity<PlantMaster> deletePlantMaster(long plantmasterId) throws Exception;
 
 }
